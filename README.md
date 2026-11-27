@@ -5,6 +5,9 @@ parameter-efficient fine-tuning in models with at most 30 billion parameters.
 The primary evidence set contains ten papers first published between February
 and November 2026.
 
+Public report page:
+<https://huggingface.co/spaces/xinchenxuan55/ai-literature-review>
+
 ## Deliverables
 
 - `report/main.tex`: LaTeX source for the report.
