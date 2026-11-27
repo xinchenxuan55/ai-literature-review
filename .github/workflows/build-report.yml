@@ -1,0 +1,45 @@
+name: Build research report
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "report/**"
+      - ".github/workflows/build-report.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      OUTPUT_PDF: StudentID-XinChenxuan.pdf
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Compile LaTeX
+        uses: xu-cheng/latex-action@v3
+        with:
+          working_directory: report
+          root_file: main.tex
+
+      - name: Rename submission PDF
+        run: cp report/main.pdf "$OUTPUT_PDF"
+
+      - name: Upload PDF artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: research-report-pdf
+          path: ${{ env.OUTPUT_PDF }}
+          if-no-files-found: error
+
+      - name: Commit generated PDF
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "Build research report PDF"
+          file_pattern: StudentID-XinChenxuan.pdf
