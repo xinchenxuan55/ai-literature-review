@@ -340,6 +340,26 @@ The 2026 literature does not support a simple winner among LoRA, DoRA, PiSSA, fi
 
 For models below 30B, the most defensible practical strategy is staged rather than universal. Start with a stability check on the target small model, tune LoRA or a compact coefficient method under an equal-memory budget, measure effective rank and layer sensitivity, and evaluate task gain jointly with general retention and safety. If multiple tasks must coexist, treat adapter alignment as part of the learning problem rather than a post-hoc averaging step. If a proposed method claims input-adaptive intelligence, isolate its gain against a learned-global control. These steps are modest, but they directly address the contradictions visible in the current literature.
 
+\appendix
+\section{Screening Notes and Assessment Checklist}
+
+\subsection{Why these ten papers were retained}
+
+The final set deliberately balances four kinds of evidence: theory with prediction (P2, P9), controlled empirical comparison (P1, P3, P8), mechanistic and allocation studies (P7), and deployment-oriented compact adaptation (P4, P5, P6, P10). This mix prevents the review from becoming a catalogue of parameter-reduction methods. P1 and P8 serve as adversarial checks on the other papers: they show which claims require stronger controls. P5, P7, and P10 provide the strongest practical clues for sub-30B deployment. P2, P3, and P4 identify the unresolved geometry of forgetting.
+
+\subsection{Questions to ask when interpreting a paper}
+
+\begin{enumerate}
+  \item Is the reported rank the configured rank or the effective rank?
+  \item Are adapters compared at equal trainable parameters, equal checkpoint storage, equal memory, or equal compute?
+  \item Were learning rates tuned separately for each method on a development split?
+  \item How many training seeds and task orders were used?
+  \item Does the retention metric include behavior and safety, or only general-text likelihood?
+  \item If the method claims input dependence, is there an equal-parameter learned-global control?
+  \item Are results below 30B reported separately from larger-model extrapolations?
+  \item Are failed runs, calibration data, fixed bases, and inference overhead disclosed?
+\end{enumerate}
+
 \section*{References}
 \begin{thebibliography}{99}
 \small
